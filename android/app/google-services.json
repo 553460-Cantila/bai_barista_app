@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "604904104335",
+    "project_id": "bai-app-e8680",
+    "storage_bucket": "bai-app-e8680.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604904104335:android:58850ee1580ea66c772bfa",
+        "android_client_info": {
+          "package_name": "com.example.bai_barista_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDFqsvJ4J-0PNA4Eb1i1cHuZUHWWYZRbg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
