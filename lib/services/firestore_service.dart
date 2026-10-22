@@ -191,7 +191,6 @@ class FirestoreService {
   }
 
   /// Staff/admin: every completed ('done') order, newest first. One equality
-  /// filter, so no composite index; date ranges are applied on the device.
   Stream<List<OrderDoc>> completedOrders() => _db
       .collection('orders')
       .where('status', isEqualTo: 'done')
@@ -254,7 +253,6 @@ class FirestoreService {
       _db.collection('settings').doc('paymentQr').set({'url': url});
 
   // ---------------- Vendor (B.A.I.) GCash QR — for subscription renewal ----------------
-  // Separate from the cafe's own customer-facing QR above.
   Stream<String?> vendorQrUrl() => _db
       .collection('settings')
       .doc('vendorQr')
@@ -300,8 +298,6 @@ class FirestoreService {
       _db.collection('settings').doc('subscription').set({'isActive': false}, SetOptions(merge: true));
 
   // ---------------- Subscription receipts / payment history ----------------
-  /// Cafe side: submit a renewal receipt. Starts 'pending' — does NOT
-  /// activate the subscription until an admin approves it.
   Future<void> submitSubscriptionReceipt(String imageUrl, String? notes) =>
       _db.collection('subscriptionPayments').add({
         'amount': 500,
@@ -360,10 +356,6 @@ class FirestoreService {
       .snapshots()
       .map((s) => _byCreated(s.docs).map((d) => SubscriptionPayment.fromMap(d.id, d.data())).toList());
 
-  // ---------------- Starter data ----------------
-  /// Populates the real 6-drink menu (with recipes + add-on effects) and
-  /// the matching inventory items. Uses fixed doc IDs and .set(), so it's
-  /// safe to run more than once — it overwrites rather than duplicates.
   Future<void> seedStarterData() async {
     final batch = _db.batch();
 
@@ -479,11 +471,6 @@ class FirestoreService {
   }
 }
 
-/// Sorts documents by their createdAt timestamp on the device instead of in
-/// the Firestore query. A query that combines where() with orderBy() needs a
-/// composite index (without one, the stream errors and screens spin forever),
-/// and orderBy also silently drops documents that have no createdAt.
-/// Documents with no date are kept and placed last.
 List<QueryDocumentSnapshot<Map<String, dynamic>>> _byCreated(
   Iterable<QueryDocumentSnapshot<Map<String, dynamic>>> docs, {
   bool descending = true,
@@ -502,8 +489,5 @@ List<QueryDocumentSnapshot<Map<String, dynamic>>> _byCreated(
   return list;
 }
 
-/// Sorts drinks A-Z on the device. A query that filters on `available` and
-/// orders by `name` needs a composite Firestore index; without it the menu
-/// stream errors and the Menu screen shows "Could not load the menu".
 List<Drink> _byName(List<Drink> drinks) =>
     drinks..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));

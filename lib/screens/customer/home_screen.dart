@@ -51,7 +51,7 @@ class CustomerHomeScreen extends StatelessWidget {
                       Expanded(child: _UnavailableView())
                     else ...[
                       const SizedBox(height: 4),
-                      const Text('Good morning!', textAlign: TextAlign.center, style: baiHeading),
+                      const Text('Welcome!', textAlign: TextAlign.center, style: baiHeading),
                       const SizedBox(height: 4),
                       const Text(
                         'What are we brewing today?',

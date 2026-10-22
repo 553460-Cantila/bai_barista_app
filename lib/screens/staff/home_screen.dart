@@ -59,7 +59,7 @@ class StaffHomeScreen extends StatelessWidget {
                       Expanded(child: _ExpiredView(onLogOut: () => _logOut(context)))
                     else ...[
                       const SizedBox(height: 4),
-                      const Text('Good morning, Barista!', textAlign: TextAlign.center, style: baiHeading),
+                      const Text('Welcome, Barista!', textAlign: TextAlign.center, style: baiHeading),
                       const SizedBox(height: 4),
                       const Text("What's brewing today?", style: TextStyle(color: Colors.white, fontSize: 15)),
                       Expanded(
